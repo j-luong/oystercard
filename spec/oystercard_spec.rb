@@ -81,16 +81,9 @@ describe Oystercard do
     end
   end
 
-  describe '#journey' do
-    it 'has an empty list of journeys by default' do
-      expect(subject.journeys).to be_empty
-    end
-  end
-
-  describe '#store_journey' do
-    it 'should store a journey into journeys' do
-      allow(Journey).to receive(:new).and_return(journey)
-      expect{ subject.store_journey }.to change{ subject.journeys }.to [journey]
+  describe '#journeys' do
+    it 'is a JourneyLog object' do
+      expect(subject.journeys).to be_instance_of(JourneyLog)
     end
   end
 end

@@ -1,4 +1,4 @@
-require_relative 'journey'
+require_relative 'journey_log'
 require_relative 'station'
 
 class Oystercard
@@ -12,7 +12,7 @@ class Oystercard
 
   def initialize
     @balance = 0
-    @journeys = []
+    @journeys = JourneyLog.new
     new_journey
   end
 
@@ -38,8 +38,7 @@ class Oystercard
   end
 
   def store_journey
-    @journeys << @journey
-    new_journey
+    @journeys.store_journey
   end
 
   private

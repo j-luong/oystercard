@@ -71,5 +71,4 @@ describe JourneyLog do
       expect(subject.journeys).to eq []
     end
   end
-
 end
