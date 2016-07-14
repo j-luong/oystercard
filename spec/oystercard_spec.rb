@@ -9,6 +9,7 @@ describe Oystercard do
   before(:each) { card_with_money.top_up(Oystercard::MAX_BALANCE) } #any reference to card_with_money will have its balance full
   let(:entry_station) { double(:entry_station) }
   let(:exit_station) { double(:exit_station) }
+  let(:journey) { double(:journey) }
 
   max_balance = Oystercard::MAX_BALANCE
   min_amount = Oystercard::MIN_AMOUNT
@@ -64,16 +65,10 @@ describe Oystercard do
         expect{ subject.touch_in(entry_station) }.to(raise_error("Card needs at least £#{min_amount} to touch in"))
       end
 
-      it 'deducts minimum fare from balance' do
-        expect{ card_with_money.touch_in(entry_station) }.to change{ card_with_money.balance }.by(-min_fare)
-      end
-
-      let(:journey) { {entry_station: entry_station} }
-      it 'record the touch_in station' do
-        card_with_money.touch_in(entry_station)
-        expect(card_with_money.journeys).to include journey
-      end
-    end
+      # it 'deducts minimum fare from balance' do 
+      #   expect{card_with_money.touch_in(entry_station) }.to change{ card_with_money.balance}.by(-min_fare)
+      # end     
+    end   
   end
 
   describe '#touch_out' do
@@ -90,12 +85,12 @@ describe Oystercard do
     it 'has an empty list of journeys by default' do
       expect(subject.journeys).to be_empty
     end
+  end
 
-    let(:journey) { {entry_station: entry_station, exit_station: exit_station} }
-    it 'stores a journey' do
-      card_with_money.touch_in(entry_station)
-      card_with_money.touch_out(exit_station)
-      expect(card_with_money.journeys).to include journey
+  describe '#store_journey' do
+    it 'should store a journey into journeys' do
+      allow(Journey).to receive(:new).and_return(journey)
+      expect{ subject.store_journey }.to change{ subject.journeys }.to [journey]
     end
   end
 end
