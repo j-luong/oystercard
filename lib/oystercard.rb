@@ -23,6 +23,7 @@ class Oystercard
 
   def touch_in(entry_station)
     raise "Card needs at least £#{MIN_AMOUNT} to touch in" if @balance < MIN_AMOUNT
+    check_fine
     @journey.start_journey(entry_station)
   end
 
@@ -43,6 +44,13 @@ class Oystercard
   end
 
   private
+
+  def check_fine
+    if in_journey?
+      deduct_fare
+      store_journey
+    end
+  end
 
   def new_journey
     @journey = Journey.new
