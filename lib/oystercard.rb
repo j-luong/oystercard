@@ -13,7 +13,6 @@ class Oystercard
   def initialize
     @balance = 0
     @journeys = JourneyLog.new
-    new_journey
   end
 
   def top_up(amount)
@@ -24,17 +23,17 @@ class Oystercard
   def touch_in(entry_station)
     raise "Card needs at least £#{MIN_AMOUNT} to touch in" if @balance < MIN_AMOUNT
     check_fine
-    @journey.start_journey(entry_station)
+    @journeys.start_journey(entry_station)
   end
 
   def touch_out(exit_station)
-    @journey.end_journey(exit_station)
+    @journeys.end_journey(exit_station)
     deduct_fare
     store_journey
   end
 
   def in_journey?
-    @journey.in_journey?
+    @journeys.in_journey?
   end
 
   def store_journey
@@ -50,11 +49,7 @@ class Oystercard
     end
   end
 
-  def new_journey
-    @journey = Journey.new
-  end
-
   def deduct_fare
-    @balance -= @journey.fare
+    @balance -= @journeys.fare
   end
 end
