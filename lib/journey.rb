@@ -18,7 +18,7 @@ class Journey
 	end
 
 	def fare
-		return 1 if !entry_station.nil? && !exit_station.nil?
-		return 6
+		return MIN_FARE if !entry_station.nil? && !exit_station.nil?
+		return PENALTY_FARE
 	end
 end

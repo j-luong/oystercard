@@ -34,7 +34,6 @@ class Oystercard
   end
 
   def in_journey?
-    return false if @journey.nil?
     @journey.in_journey?
   end
 
