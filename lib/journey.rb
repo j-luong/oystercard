@@ -21,8 +21,14 @@ class Journey
 	end
 
 	def fare
-		return MIN_FARE if !entry_station.nil? && !exit_station.nil?
+		return calculate_fare if !entry_station.nil? && !exit_station.nil?
 		return PENALTY_FARE
+	end
+
+	private
+
+	def calculate_fare
+		MIN_FARE + zones_crossed
 	end
 
 	def zones_crossed

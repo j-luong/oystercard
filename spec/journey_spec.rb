@@ -61,33 +61,35 @@ describe Journey do
   describe '#fare' do
     it { is_expected.to(respond_to(:fare)) }
 
-    it 'should return fare for completed journey' do
-      subject.start_journey(:start_station)
-      subject.end_journey(:end_station)
-      expect(subject.fare).to eq(min_fare)
-    end
-
-    it 'should return penalty fare for incomplete journey' do
-      subject.start_journey(:start_station)
-      expect(subject.fare).to eq(penalty_fare)
-    end
-
-    it 'should return penalty fare for incomplete journey' do
-      subject.end_journey(:end_station)
-      expect(subject.fare).to eq(penalty_fare)
-    end
-  end
-
-  describe '#zones_crossed' do
-    it { is_expected.to(respond_to(:zones_crossed)) }
-
-    context 'entry and exit stations in the same zone' do
-      it 'should calculate the zones crossed between entry_station and exit_station' do
+    context 'journeys in the same zone' do
+      it 'should return fare for completed journey' do
         subject.start_journey(entry_station)
         subject.end_journey(exit_station)
-        expect(subject.zones_crossed).to eq(0)
+        expect(subject.fare).to eq(1)
       end
     end
+
+    it 'should return penalty fare for incomplete journey' do
+      subject.start_journey(:start_station)
+      expect(subject.fare).to eq(penalty_fare)
+    end
+
+    it 'should return penalty fare for incomplete journey' do
+      subject.end_journey(:end_station)
+      expect(subject.fare).to eq(penalty_fare)
+    end
   end
+
+  # describe '#zones_crossed' do
+  #   it { is_expected.to(respond_to(:zones_crossed)) }
+  #
+  #   context 'entry and exit stations in the same zone' do
+  #     it 'should calculate the zones crossed between entry_station and exit_station' do
+  #       subject.start_journey(entry_station)
+  #       subject.end_journey(exit_station)
+  #       expect(subject.zones_crossed).to eq(0)
+  #     end
+  #   end
+  # end
 
 end

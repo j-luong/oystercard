@@ -7,8 +7,8 @@ describe Oystercard do
 
   let(:card_with_money) { described_class.new }
   before(:each) { card_with_money.top_up(Oystercard::MAX_BALANCE) } #any reference to card_with_money will have its balance full
-  let(:entry_station) { double(:entry_station) }
-  let(:exit_station) { double(:exit_station) }
+  let(:entry_station){ double(:entry_station, name: "Aldgate", zone: 1) }
+  let(:exit_station){ double(:exit_station, name: "Aldgate East", zone: 1) }
   let(:journey) { double(:journey) }
 
   max_balance = Oystercard::MAX_BALANCE

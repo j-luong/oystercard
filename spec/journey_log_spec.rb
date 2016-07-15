@@ -3,6 +3,8 @@ require 'journey_log'
 describe JourneyLog do
 
   let(:journey) { double(:journey) }
+  let(:entry_station){ double(:entry_station, name: "Aldgate", zone: 1) }
+  let(:exit_station){ double(:exit_station, name: "Aldgate East", zone: 1) }
 
   describe '#start_journey' do
 
@@ -53,8 +55,8 @@ describe JourneyLog do
     end
 
     it 'returns a fare' do
-      subject.start_journey(:entry_station)
-      subject.end_journey(:entry_station)
+      subject.start_journey(entry_station)
+      subject.end_journey(entry_station)
       expect(subject.fare).to eq 1
     end
   end
