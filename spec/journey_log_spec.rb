@@ -11,8 +11,8 @@ describe JourneyLog do
     end
 
     it 'should store the entry station in journey' do
-      subject.start_journey("asd")
-      expect(subject.journey.entry_station).to eq "asd"
+      subject.start_journey(:entry_station)
+      expect(subject.journey.entry_station).to eq :entry_station
     end
   end
 
@@ -23,8 +23,8 @@ describe JourneyLog do
     end
 
     it 'should store the exit station' do
-      subject.end_journey("asd")
-      expect(subject.journey.exit_station).to eq "asd"
+      subject.end_journey(:exit_station)
+      expect(subject.journey.exit_station).to eq :exit_station
     end
   end
 
@@ -53,8 +53,8 @@ describe JourneyLog do
     end
 
     it 'returns a fare' do
-      subject.start_journey("asd")
-      subject.end_journey("asd")
+      subject.start_journey(:entry_station)
+      subject.end_journey(:entry_station)
       expect(subject.fare).to eq 1
     end
   end

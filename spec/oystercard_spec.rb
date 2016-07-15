@@ -64,11 +64,7 @@ describe Oystercard do
       it 'raise error if card does not have minimum amount' do
         expect{ subject.touch_in(entry_station) }.to(raise_error("Card needs at least £#{min_amount} to touch in"))
       end
-
-      # it 'deducts minimum fare from balance' do 
-      #   expect{card_with_money.touch_in(entry_station) }.to change{ card_with_money.balance}.by(-min_fare)
-      # end     
-    end   
+    end
   end
 
   describe '#touch_out' do

@@ -8,17 +8,26 @@ describe Journey do
   min_fare = Journey::MIN_FARE
   penalty_fare = Journey::PENALTY_FARE
 
-  # describe 'journey' do
-  #   it { is_expected.respond_to(:journey) }
-  # end
+  let(:entry_station){ double(:entry_station, name: "Aldgate", zone: 1) }
+  let(:exit_station){ double(:exit_station, name: "Aldgate East", zone: 1) }
+  let(:station_class) { Station.new("Aldgate", 1) } #VERY SMELLY
+  # let(:stn) { class_double("Station") }
+  # allow(stn).to receive(:is_a?).and_return("Station")
 
   describe '#start_journey' do
     it { is_expected.to(respond_to(:start_journey).with(1).argument) }
-
     it 'stores the entry station' do
-      subject.start_journey(:entry_station)
-      expect(subject.entry_station).to eq(:entry_station)
+      # allow(Station).to receive(:new).and_return(Station)
+      # entry_station = class_double("Station")
+      subject.start_journey(station_class)
+      expect(subject.entry_station).to eq(station_class)
+      # subject.start_journey(stn)
+      # expect(subject.entry_station).to eq(stn)
     end
+
+    # it 'take a Station object as an agurment' do
+    #   expect{ subject.start_journey("string") }.to raise_error("Error: this is not a valid station.")
+    # end
   end
 
   describe '#end_journey' do
@@ -66,7 +75,19 @@ describe Journey do
     it 'should return penalty fare for incomplete journey' do
       subject.end_journey(:end_station)
       expect(subject.fare).to eq(penalty_fare)
-    end  
+    end
+  end
+
+  describe '#zones_crossed' do
+    it { is_expected.to(respond_to(:zones_crossed)) }
+
+    context 'entry and exit stations in the same zone' do
+      it 'should calculate the zones crossed between entry_station and exit_station' do
+        subject.start_journey(entry_station)
+        subject.end_journey(exit_station)
+        expect(subject.zones_crossed).to eq(0)
+      end
+    end
   end
 
 end
