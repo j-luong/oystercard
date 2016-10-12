@@ -28,4 +28,4 @@ puts card.journeys.count
 ```
 
 # Testing
-Tests can be run by useing the ```rspec``` command.
+Tests can be run by using the ```rspec``` command.
